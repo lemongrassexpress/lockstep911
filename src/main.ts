@@ -15,8 +15,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <img src=${Tower2} id="t2" class="lower fullscreen">
 <img src=${Tower2a} id="t2a" class="fullscreen">
 <img src=${Foreground} class="fullscreen">
-<img src=${Plane} id="plane" class="absolute">
-<img src=${Boom} id="boom" class="absolute boom">
+<img src=${Plane} id="plane" class="absolute hidden">
+<img src=${Boom} id="boom" class="absolute boom hidden">
 <div>Press any key or click.</div>
 <a href="https://www.youtube.com/watch?v=kZqfcEhBQ2c">based on this</a>
 `;
@@ -129,12 +129,12 @@ await song.play(
     if (Math.round(song.getBeat() * 2) % 2 == 0) {
       animateOnce(tower1, "bounce", ["bounce2"]);
     } else {
-      animateOnce(plane, "planeFlying");
+      animateOnce(plane, "planeFlying", ["hidden"]);
       animateOnce(tower1, "bounce2", ["bounce"]);
     }
   },
   () => {
-    animateOnce(boom, "boom");
+    animateOnce(boom, "boom", ["hidden"]);
     boom.src = boom.src;
   },
   (x) => console.log(x),

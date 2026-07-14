@@ -7,6 +7,10 @@ body {
   overflow: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 .fullscreen,
 .absolute {
   position: absolute;
