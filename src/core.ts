@@ -112,7 +112,10 @@ export class Song {
     const t = this.hits[this.currentIndex];
     const tooEarly = 0.18;
     this.onHit(now - t);
-    if (now < t - tooEarly) {
+    if (now < t - 1) {
+      // hit nothing
+      return false;
+    } else if (now < t - tooEarly) {
       // way too early (doesn't match window)
       sounds.mistake.play();
       return false;
