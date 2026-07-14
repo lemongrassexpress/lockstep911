@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  cursor: pointer;
 }
 body {
   width: 100vw;
@@ -116,7 +117,7 @@ body {
     opacity: 1;
   }
   100% {
-    display: none;
+    /* display: none; */
     opacity: 0;
   }
 }

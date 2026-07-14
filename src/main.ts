@@ -145,12 +145,13 @@ animateOnce(tower1, "bounce");
 animateOnce(tower2, "tempHide");
 animateOnce(tower2a, "shift");
 let keys = new Set<string>();
-window.addEventListener("click", () => hit());
-window.addEventListener("keydown", ({ key }) => {
+const body = document.querySelector("body")!;
+body.addEventListener("click", () => hit());
+body.addEventListener("keydown", ({ key }) => {
   if (!keys.has(key)) hit();
   keys.add(key);
 });
-window.addEventListener("keyup", ({ key }) => keys.delete(key));
+body.addEventListener("keyup", ({ key }) => keys.delete(key));
 
 function hit() {
   const beat = (song.getBeat() * 2) % 2;
