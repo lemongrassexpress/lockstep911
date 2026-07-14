@@ -20,7 +20,7 @@ const context = new contextClass() as AudioContext;
  * https://webaudioapi.com/book/Web_Audio_API_Boris_Smus_html/ch01.html#s01_8
  * https://webaudioapi.com/book/Web_Audio_API_Boris_Smus_html/ch02.html
  */
-class Audio {
+export class Audio {
   readonly url;
   readonly context;
   private buffer: AudioBuffer | null = null;
@@ -55,6 +55,7 @@ class Audio {
     source.buffer = this.buffer;
     source.connect(this.context.destination);
     source.start(offset);
+    return source;
   }
 }
 
