@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b" # v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-docstring-first
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "416330aa894dcaf8b65e9cc83ed7d950829f36e0" # v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [css, javascript, jsx, ts, tsx, json, html]
+        additional_dependencies:
+          - prettier@3.4.2
