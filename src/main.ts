@@ -90,23 +90,54 @@ onoffbeat2(78, 88, 94);
 onoffbeat2(94, 112, 128);
 onbeat(16 + 64 + 128, 16 + 64 + 160);
 
-const song = new Song({ audio: sounds.song, bpm: 162, offset: 0, track });
-await song.play();
+const hits = track
+  .filter((x) => [sounds.cowbell, sounds.t2n].indexOf(x.sound) === -1)
+  .map((x) => x.beat);
+const song = new Song({
+  audio: sounds.song,
+  bpm: 162,
+  offset: 0,
+  track,
+  hits,
+  beats: [
+    ...hits,
+    ...track.filter((x) => x.sound === sounds.cowbell).map((x) => x.beat),
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+  ],
+});
+await song.play(
+  undefined,
+  () => animateOnce(tower1, "bounce"),
+  (x) => console.log(x),
+);
 
+animateOnce(tower1, "bounce");
 animateOnce(tower2, "tempHide");
 animateOnce(tower2a, "shift");
-document
-  .querySelector<HTMLDivElement>("#app")!
-  .addEventListener("click", () => {
-    // sounds.mistake.play();
-    animateOnce(tower1, "bounce");
-    const beat = (song.getBeat() * 2) % 2;
-    if (Math.round(beat) % 2 == 0) {
-      if (Math.min(beat, 2 - beat) > 0.2) sounds.step.play(); // avoid dupe
-      animateOnce(tower2, "bounce");
-    } else {
-      sounds.step2.play();
-      animateOnce(tower2, "tempHide");
-      animateOnce(tower2a, "shift");
-    }
-  });
+let keys = new Set<string>();
+const app = document.querySelector<HTMLDivElement>("#app")!;
+app.addEventListener("click", () => hit());
+window.addEventListener("keydown", ({ key }) => {
+  if (!keys.has(key)) hit();
+  keys.add(key);
+});
+window.addEventListener("keyup", ({ key }) => keys.delete(key));
+
+function hit() {
+  const beat = (song.getBeat() * 2) % 2;
+  const hitGood = song.hit();
+  if (Math.round(beat) % 2 == 0) {
+    if (!hitGood || Math.min(beat, 2 - beat) > 0.2) sounds.step.play(); // avoid dupe
+    animateOnce(tower2, "bounce");
+  } else {
+    sounds.step2.play();
+    animateOnce(tower2, "tempHide");
+    animateOnce(tower2a, "shift");
+  }
+  console.log(hitGood);
+}

@@ -20,7 +20,9 @@ if (!contextClass) {
   alert("Web Audio API is not available. Please use a different browser.");
   throw new Error("Web Audio API is not available.");
 }
-const context = new contextClass() as AudioContext;
+const context = new contextClass({
+  latencyHint: "interactive",
+}) as AudioContext;
 
 /**
  * https://webaudioapi.com/book/Web_Audio_API_Boris_Smus_html/ch01.html#s01_8
