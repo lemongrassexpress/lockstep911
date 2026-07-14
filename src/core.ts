@@ -20,6 +20,7 @@ export class Song {
   private currentIndex = 0;
   private startTime = 0;
   private onHit: (delta: number) => void = (_) => {};
+  private onFail: () => void = () => {};
   constructor({
     audio,
     bpm,
@@ -68,6 +69,7 @@ export class Song {
     const interval = setInterval(() => this.tick(onBeat, onFail), 5);
     song.addEventListener("ended", () => clearInterval(interval));
     this.onHit = onHit;
+    this.onFail = onFail;
   }
 
   getBeat(): number {
@@ -88,7 +90,6 @@ export class Song {
       this.hits[this.currentIndex] + latestWindow < now
     ) {
       if (Math.round((this.hits[this.currentIndex] * 2) / this.spb) % 2) {
-        sounds.boom.play();
         onFail();
       }
       sounds.mistake.play();
@@ -115,9 +116,13 @@ export class Song {
       // way too early (doesn't match window)
       sounds.mistake.play();
       return false;
-    } else if (now < t - 0.1) {
-      // too early
-      sounds.mistake.play();
+    } else if (now < t - 0.08 || now > t + 0.06) {
+      // tad early
+      if (Math.round((this.hits[this.currentIndex] * 2) / this.spb) % 2) {
+        this.onFail();
+      } else {
+        sounds.mistake.play();
+      }
       ++this.currentIndex;
       return false;
     } else {

@@ -136,6 +136,7 @@ await song.play(
   () => {
     animateOnce(boom, "boom", ["hidden"]);
     boom.src = boom.src;
+    sounds.boom.play();
   },
   (x) => console.log(x),
 );
