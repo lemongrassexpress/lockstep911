@@ -59,12 +59,13 @@ export class Song {
   async play(
     offset: number = 0,
     onBeat: () => void,
+    onFail: () => void,
     onHit: (delta: number) => void,
   ) {
     this.startTime = this.audio.context.currentTime - offset;
     const song = await this.audio.play(this.startTime);
     this.track.forEach(({ t, sound }) => sound.play(this.startTime + t));
-    const interval = setInterval(() => this.tick(onBeat), 5);
+    const interval = setInterval(() => this.tick(onBeat, onFail), 5);
     song.addEventListener("ended", () => clearInterval(interval));
     this.onHit = onHit;
   }
@@ -78,7 +79,7 @@ export class Song {
   }
 
   /* handles all sfx that are supposed to play */
-  private tick(onBeat: () => void) {
+  private tick(onBeat: () => void, onFail: () => void) {
     const now = this.now();
     // update missed
     const latestWindow = 0.1; // each eighth note is about 180ms
@@ -86,6 +87,10 @@ export class Song {
       this.currentIndex < this.hits.length &&
       this.hits[this.currentIndex] + latestWindow < now
     ) {
+      if (Math.round((this.hits[this.currentIndex] * 2) / this.spb) % 2) {
+        sounds.boom.play();
+        onFail();
+      }
       sounds.mistake.play();
       ++this.currentIndex;
       this.onHit(latestWindow);

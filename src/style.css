@@ -95,3 +95,23 @@ body {
       scale(2);
   }
 }
+
+.boom {
+  transform: translateX(50vw) translateY(15vh);
+  animation: flash 500ms forwards;
+}
+
+@keyframes flash {
+  0% {
+    display: block;
+    opacity: 1;
+  }
+  50% {
+    display: block;
+    opacity: 1;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}

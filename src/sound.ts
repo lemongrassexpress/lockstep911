@@ -1,5 +1,6 @@
 import _cowbell from "./assets/GROUP_COMMON_00000006.wav";
 import _mistake from "./assets/GROUP_COMMON_00000022.wav";
+import _boom from "./assets/vine-boom.wav";
 import _step from "./assets/GROUP_NTR_BACKBEAT_EN_00000000.wav";
 import _1hai from "./assets/GROUP_NTR_BACKBEAT_EN_00000001.wav";
 import _1ha from "./assets/GROUP_NTR_BACKBEAT_EN_00000002.wav";
@@ -71,6 +72,7 @@ export class Audio {
 const sounds = {
   cowbell: new Audio(context, _cowbell),
   mistake: new Audio(context, _mistake),
+  boom: new Audio(context, _boom),
   step: new Audio(context, _step),
   step2: new Audio(context, _step2),
   song: new Audio(context, _song),

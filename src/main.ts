@@ -7,6 +7,7 @@ import Tower1 from "./assets/left.png";
 import Tower2 from "./assets/right.png";
 import Tower2a from "./assets/right2.png";
 import Plane from "./assets/plane.png";
+import Boom from "./assets/200w.gif";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <img src=${Background} class="fullscreen">
@@ -15,6 +16,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <img src=${Tower2a} id="t2a" class="fullscreen">
 <img src=${Foreground} class="fullscreen">
 <img src=${Plane} id="plane" class="absolute">
+<img src=${Boom} id="boom" class="absolute boom">
 <div>Press any key or click.</div>
 `;
 
@@ -22,6 +24,7 @@ const tower1 = document.querySelector<HTMLImageElement>("#t1")!;
 const tower2 = document.querySelector<HTMLImageElement>("#t2")!;
 const tower2a = document.querySelector<HTMLImageElement>("#t2a")!;
 const plane = document.querySelector<HTMLImageElement>("#plane")!;
+const boom = document.querySelector<HTMLImageElement>("#boom")!;
 
 function animateOnce(
   element: HTMLElement,
@@ -128,6 +131,10 @@ await song.play(
       animateOnce(plane, "planeFlying");
       animateOnce(tower1, "bounce2", ["bounce"]);
     }
+  },
+  () => {
+    animateOnce(boom, "boom");
+    boom.src = boom.src;
   },
   (x) => console.log(x),
 );
