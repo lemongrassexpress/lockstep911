@@ -144,8 +144,7 @@ animateOnce(tower1, "bounce");
 animateOnce(tower2, "tempHide");
 animateOnce(tower2a, "shift");
 let keys = new Set<string>();
-const app = document.querySelector<HTMLDivElement>("#app")!;
-app.addEventListener("click", () => hit());
+window.addEventListener("click", () => hit());
 window.addEventListener("keydown", ({ key }) => {
   if (!keys.has(key)) hit();
   keys.add(key);
