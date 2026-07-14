@@ -44,6 +44,10 @@ export class Song {
     song.addEventListener("ended", () => clearInterval(interval));
   }
 
+  getBeat(): number {
+    return (this.audio.context.currentTime - this.startTime) / this.spb;
+  }
+
   /* handles all sfx that are supposed to play */
   private tick() {
     const now = this.audio.context.currentTime - this.startTime;

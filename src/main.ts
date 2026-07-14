@@ -1,16 +1,29 @@
 import "./style.css";
 import { sounds } from "./sound";
 import { Song, type Track } from "./core";
+import Background from "./assets/background.png";
+import Foreground from "./assets/foreground.png";
+import Tower1 from "./assets/left.png";
+import Tower2 from "./assets/right.png";
+import Tower2a from "./assets/right2.png";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-<button>hi</button>
+<img src=${Background}>
+<img src=${Tower1} id="t1" class="lower">
+<img src=${Tower2} id="t2" class="lower">
+<img src=${Tower2a} id="t2a" class="">
+<img src=${Foreground}>
 `;
 
-// document
-//   .querySelector<HTMLDivElement>("#app")!
-//   .addEventListener("click", () => {
-//     sounds.cowbell.play();
-//   });
+const tower1 = document.querySelector<HTMLImageElement>("#t1")!;
+const tower2 = document.querySelector<HTMLImageElement>("#t2")!;
+const tower2a = document.querySelector<HTMLImageElement>("#t2a")!;
+
+function animateOnce(element: HTMLElement, className: string) {
+  element.classList.remove(className);
+  void element.offsetWidth;
+  element.classList.add(className);
+}
 
 const track: Track = [];
 for (let i = 0; i < 4; ++i) track.push({ beat: 12 + i, sound: sounds.cowbell });
@@ -79,3 +92,21 @@ onbeat(16 + 64 + 128, 16 + 64 + 160);
 
 const song = new Song({ audio: sounds.song, bpm: 162, offset: 0, track });
 await song.play();
+
+animateOnce(tower2, "tempHide");
+animateOnce(tower2a, "shift");
+document
+  .querySelector<HTMLDivElement>("#app")!
+  .addEventListener("click", () => {
+    // sounds.mistake.play();
+    animateOnce(tower1, "bounce");
+    const beat = (song.getBeat() * 2) % 2;
+    if (Math.round(beat) % 2 == 0) {
+      if (Math.min(beat, 2 - beat) > 0.2) sounds.step.play(); // avoid dupe
+      animateOnce(tower2, "bounce");
+    } else {
+      sounds.step2.play();
+      animateOnce(tower2, "tempHide");
+      animateOnce(tower2a, "shift");
+    }
+  });
