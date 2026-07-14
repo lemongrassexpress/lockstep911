@@ -6,19 +6,22 @@ import Foreground from "./assets/foreground.png";
 import Tower1 from "./assets/left.png";
 import Tower2 from "./assets/right.png";
 import Tower2a from "./assets/right2.png";
+import Plane from "./assets/plane.png";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-<img src=${Background}>
-<img src=${Tower1} id="t1" class="lower">
-<img src=${Tower2} id="t2" class="lower">
-<img src=${Tower2a} id="t2a" class="">
-<img src=${Foreground}>
+<img src=${Background} class="fullscreen">
+<img src=${Tower1} id="t1" class="lower fullscreen">
+<img src=${Tower2} id="t2" class="lower fullscreen">
+<img src=${Tower2a} id="t2a" class="fullscreen">
+<img src=${Foreground} class="fullscreen">
+<img src=${Plane} id="plane" class="absolute">
 <div>Press any key or click.</div>
 `;
 
 const tower1 = document.querySelector<HTMLImageElement>("#t1")!;
 const tower2 = document.querySelector<HTMLImageElement>("#t2")!;
 const tower2a = document.querySelector<HTMLImageElement>("#t2a")!;
+const plane = document.querySelector<HTMLImageElement>("#plane")!;
 
 function animateOnce(
   element: HTMLElement,
@@ -122,6 +125,7 @@ await song.play(
     if (Math.round(song.getBeat() * 2) % 2 == 0) {
       animateOnce(tower1, "bounce", ["bounce2"]);
     } else {
+      animateOnce(plane, "planeFlying");
       animateOnce(tower1, "bounce2", ["bounce"]);
     }
   },
