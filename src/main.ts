@@ -18,6 +18,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <img src=${Plane} id="plane" class="absolute">
 <img src=${Boom} id="boom" class="absolute boom">
 <div>Press any key or click.</div>
+<a href="https://www.youtube.com/watch?v=kZqfcEhBQ2c">based on this</a>
 `;
 
 const tower1 = document.querySelector<HTMLImageElement>("#t1")!;
