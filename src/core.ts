@@ -37,7 +37,7 @@ export class Song {
       .sort((a, b) => a.t - b.t);
   }
   async play(offset: number = 0) {
-    this.startTime = this.audio.context.currentTime + offset;
+    this.startTime = this.audio.context.currentTime - offset;
     const song = await this.audio.play(this.startTime);
     this.track.forEach(({ t, sound }) => sound.play(this.startTime + t));
     const interval = setInterval(() => this.tick(), 50);
