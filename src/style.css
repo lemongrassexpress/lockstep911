@@ -23,6 +23,10 @@ img {
   transition: all 200ms cubic-bezier(0, 0, 0, 1);
 }
 
+.bounce2 {
+  animation: leftTowerDodge 200ms cubic-bezier(0, 0, 0, 1) forwards;
+}
+
 .tempHide {
   animation: tempHide 200ms cubic-bezier(0, 0, 0, 1) forwards;
 }
@@ -62,5 +66,14 @@ img {
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes leftTowerDodge {
+  0% {
+    transform: translateX(-35px) rotate(-15deg);
+  }
+  100% {
+    transform: translateX(0px);
   }
 }

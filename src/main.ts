@@ -13,14 +13,19 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <img src=${Tower2} id="t2" class="lower">
 <img src=${Tower2a} id="t2a" class="">
 <img src=${Foreground}>
+<div>Press any key or click.</div>
 `;
 
 const tower1 = document.querySelector<HTMLImageElement>("#t1")!;
 const tower2 = document.querySelector<HTMLImageElement>("#t2")!;
 const tower2a = document.querySelector<HTMLImageElement>("#t2a")!;
 
-function animateOnce(element: HTMLElement, className: string) {
-  element.classList.remove(className);
+function animateOnce(
+  element: HTMLElement,
+  className: string,
+  remove: string[] = [],
+) {
+  element.classList.remove(className, ...remove);
   void element.offsetWidth;
   element.classList.add(className);
 }
@@ -112,7 +117,14 @@ const song = new Song({
 });
 await song.play(
   undefined,
-  () => animateOnce(tower1, "bounce"),
+  () => {
+    // animateOnce(tower1, "bounce");
+    if (Math.round(song.getBeat() * 2) % 2 == 0) {
+      animateOnce(tower1, "bounce", ["bounce2"]);
+    } else {
+      animateOnce(tower1, "bounce2", ["bounce"]);
+    }
+  },
   (x) => console.log(x),
 );
 
